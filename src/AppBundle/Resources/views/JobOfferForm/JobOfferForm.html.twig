@@ -1,0 +1,9 @@
+{% form_theme twigform _self %}
+{% for flashMessage in app.session.flashbag.get('success') %}
+    <div class="flash-success">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+{{ form_start(twigform)}}
+{{form_widget(twigform)}}
+{{form_end(twigform)}}

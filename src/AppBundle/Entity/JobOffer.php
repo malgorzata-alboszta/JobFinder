@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class JobOffer
 {
+
     /**
      * @var integer
      *
@@ -60,15 +61,15 @@ class JobOffer
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="text")
+     * @ORM\Column(name="url", type="text", nullable=true)
      */
     private $url;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="category", type="string", length=255)
-     */
+     * @var category
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")//oferta, kategoria i potem d:s:update
+     * */
     private $category;
 
     /**
@@ -97,7 +98,7 @@ class JobOffer
      *
      * @ORM\Column(name="veryfication", type="boolean")
      */
-    private $veryfication=false;
+    private $veryfication = false;
 
     /**
      * @var DateTime
@@ -112,7 +113,7 @@ class JobOffer
      * @ORM\Column(name="expiredAt", type="datetime")
      */
     private $expiredAt;
-    
+
     function __construct()
     {
         $this->createdAt = new DateTime();
@@ -120,7 +121,7 @@ class JobOffer
         $this->expiredAt->modify('+30 days');
     }
 
-        /**
+    /**
      * Get id
      *
      * @return integer 
@@ -269,29 +270,6 @@ class JobOffer
     }
 
     /**
-     * Set category
-     *
-     * @param string $category
-     * @return JobOffer
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return string 
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
      * Set description
      *
      * @param string $description
@@ -428,4 +406,28 @@ class JobOffer
     {
         return $this->expiredAt;
     }
+
+    /**
+     * Set category
+     *
+     * @param \AppBundle\Entity\Category $category
+     * @return JobOffer
+     */
+    public function setCategory(\AppBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \AppBundle\Entity\Category 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
 }

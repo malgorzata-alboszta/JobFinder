@@ -1,0 +1,28 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+    <h1>Oferty pracy</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Nazwa stanowiska</th>
+            <th>Kategoria</th>
+            <th>Lokalizacja</th>
+            <th>Data dodania oferty</th>
+            <th>Link</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for xxx in lista_ofert %}
+                {#{{dump(xxx.category.category)}}#}
+            <tr>
+                <td>{{xxx.position}}</td>
+                <td>{{xxx.category.category}}</td> {#xxx.category to objekt encji Category. A na nim wołamy getCategory().#}
+                <td>{{xxx.location}}</td>
+                <td>{{xxx.createdAt|date('d-m-y')}}</td>
+                {# szczegoly to name z route akcji viewAction, szukamy tam id z xxx.id czyli jeden z jobList z listAction #}
+                <td> <a href="{{path("szczegoly", {id:xxx.id})}}">Szczegóły</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

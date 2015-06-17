@@ -21,12 +21,16 @@ class JobOfferForm extends AbstractType
                     'required' => false,
                     'label' => 'Wymiar Pracy'))
                 ->add('logo', 'text', array('label' => 'Logo', 'required' => false))
-                ->add('url', 'text', array('label' => 'Url','required' => false))
-                ->add('category', 'text', array('label' => 'Kategoria'))
+                ->add('url', 'text', array('label' => 'Url', 'required' => false))
+                ->add('category', 'entity', array(
+                    'class' => 'AppBundle:Category',
+                    'property' => 'category',
+                ))
+                //->add('category', 'text', array('label' => 'Kategoria'))
                 ->add('description', 'textarea', array('label' => 'Opis'))
                 ->add('howToApply', 'text', array('label' => 'Aplikowanie'))
                 ->add('email', 'text', array('label' => 'Kontakt email'))
-                ->add('howLong', 'integer', array('label' => 'Ilosc dni na portalu', 'mapped' => false, 'data'=>30))
+                ->add('howLong', 'integer', array('label' => 'Ilosc dni na portalu', 'mapped' => false, 'data' => 30))
                 ->add('save', 'submit');
     }
 

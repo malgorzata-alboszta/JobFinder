@@ -1,0 +1,29 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+    <h1>Szczegóły oferty</h1>
+    <table>
+        <tbody>
+        <tr>
+            <th>Nazwa stanowiska</th>
+            <td>{{details.position}}</td>
+        </tr>
+        <tr>
+            <th>Kategoria</th>
+            <td>{{details.category.category}}</td>
+        </tr>
+        <tr>
+            <th>Lokalizacja</th>
+            <td>{{details.location}}</td>
+        </tr>
+        <tr>
+            <th>Data dodania oferty</th>
+            <td>{{details.createdAt|date('d-m-y')}}</td>
+        </tr>
+        <tr>
+            <th>Data wygasniecia oferty</th>
+            <td>{{details.expiredAt|date('d-m-y')}}
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
+

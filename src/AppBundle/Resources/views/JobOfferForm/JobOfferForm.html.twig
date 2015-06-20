@@ -4,6 +4,6 @@
         {{ flashMessage }}
     </div>
 {% endfor %}
-{{ form_start(twigform)}}
+{{ form_start(twigform, {attr: {'novalidate':'novalidate'} })}}
 {{form_widget(twigform)}}
 {{form_end(twigform)}}

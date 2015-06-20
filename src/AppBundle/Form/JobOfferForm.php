@@ -19,16 +19,23 @@ class JobOfferForm extends AbstractType
                     'choices' => array('ft' => 'Full-time',
                         'pt' => 'Part-time', 'f' => 'freelance'),
                     'required' => false,
-                    'label' => 'Wymiar Pracy'))
+                    'label' => 'Wymiar Pracy',
+                    'placeholder' => 'Choose an option'))
                 ->add('logo', 'text', array('label' => 'Logo', 'required' => false))
                 ->add('url', 'text', array('label' => 'Url', 'required' => false))
                 ->add('category', 'entity', array(
                     'class' => 'AppBundle:Category',
                     'property' => 'category',
+                    'placeholder' => 'Select proper category',
                 ))
                 //->add('category', 'text', array('label' => 'Kategoria'))
                 ->add('description', 'textarea', array('label' => 'Opis'))
-                ->add('howToApply', 'text', array('label' => 'Aplikowanie'))
+                ->add('howToApply', 'choice', array(
+                    'choices' => array('1' => 'email',
+                        '2' => 'On-line', '3' => 'badz nija - znajdz nas :)'),
+                    'label' => 'Aplikowanie',
+                    'placeholder' => 'Choose one')
+                )
                 ->add('email', 'text', array('label' => 'Kontakt email'))
                 ->add('howLong', 'integer', array('label' => 'Ilosc dni na portalu', 'mapped' => false, 'data' => 30))
                 ->add('save', 'submit');

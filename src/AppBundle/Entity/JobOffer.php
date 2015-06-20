@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * JobOffer
@@ -25,28 +26,30 @@ class JobOffer
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(message="Określenie pozycji zawodowej jest obowiazkowe")
      * @ORM\Column(name="position", type="string", length=255)
      */
     private $position;
 
     /**
      * @var string
-     *
+     * @Assert\Length(max=255)
+     * @Assert\NotBlank(message = "Określenie lokalizacji jest konieczne. Podaj nazwę miasta lub regionu.")
      * @ORM\Column(name="location", type="string", length=255)
      */
     private $location;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="companyName", type="string", length=255)
+     * @Assert\Length(max=255)
+     * @ORM\Column(name="companyName", type="string", length=255, nullable=true)
      */
     private $companyName;
 
     /**
      * @var string
-     *
+     * @Assert\Length(max=16)
+     * @Assert\NotBlank()
      * @ORM\Column(name="type", type="string", length=255)
      */
     private $type;
@@ -67,6 +70,7 @@ class JobOffer
 
     /**
      * @var category
+     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Category")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")//oferta, kategoria i potem d:s:update
      * */
@@ -74,22 +78,23 @@ class JobOffer
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(message="Dodaj opis satnowiska")
+     * @Assert\Length(max=128)
      * @ORM\Column(name="description", type="text")
      */
     private $description;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="howToApply", type="string", length=255)
      */
     private $howToApply;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="email", type="text")
+     * @Assert\Email()
+     * @ORM\Column(name="email", type="text", nullable=true)
      */
     private $email;
 

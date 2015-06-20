@@ -1,4 +1,16 @@
-{% form_theme twigform _self %}
+{% extends '::base.html.twig' %}
+
+{% form_theme twigform 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron">
+
+        <div class="container">
+            <h1>Dodaj ofertę</h1>
+        </div>
+    </div>
+    <div class="container">
+        
 {% for flashMessage in app.session.flashbag.get('success') %}
     <div class="flash-success">
         {{ flashMessage }}
@@ -7,3 +19,5 @@
 {{ form_start(twigform, {attr: {'novalidate':'novalidate'} })}}
 {{form_widget(twigform)}}
 {{form_end(twigform)}}
+    </div>
+{% endblock %}

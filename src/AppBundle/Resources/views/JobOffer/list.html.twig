@@ -1,6 +1,14 @@
 {% extends '::base.html.twig' %}
 {% block body %}
-    <h1>Oferty pracy</h1>
+<div class="jumbotron">
+    <div class="container">
+        <h1>Oferty pracy</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
     <table>
         <thead>
         <tr>
@@ -25,4 +33,7 @@
             {% endfor %}
         </tbody>
     </table>
+        </div>
+    </div>
+</div>
 {% endblock %}

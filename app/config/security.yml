@@ -1,20 +1,25 @@
 security:
     
     encoders:
-        Symfony\Component\Security\Core\User\User :
+        AppBundle\Entity\User:
             algorithm: bcrypt
             cost: 12
+            
 
     providers:
-        in_memory:
-            memory: 
-                users:
-                    gosia:
-                        password: $2a$12$ST8UpxgWVqH.U8f7kc43sea4ZK1a3eem9EGFG8MQ6/bDmPCF6UizC
-                        roles: ROLE_ADMIN
-                    krzyhu:
-                         password: $2a$12$Q8T49hbzdejTBBeT5GA3EuEAQo76KGONPtNt3OybEsEd3JCKzlfdq
-                         roles: ROLE_USER
+#        in_memory:
+#            memory: 
+#                users:
+#                    gosia:
+#                        password: $2a$12$ST8UpxgWVqH.U8f7kc43sea4ZK1a3eem9EGFG8MQ6/bDmPCF6UizC
+#                        roles: ROLE_ADMIN
+#                    krzyhu:
+#                         password: $2a$12$Q8T49hbzdejTBBeT5GA3EuEAQo76KGONPtNt3OybEsEd3JCKzlfdq
+#                         roles: ROLE_USER
+        JF_provider:
+            entity:
+                class: AppBundle:User
+                property: username
                          
 
     firewalls:
@@ -32,3 +37,4 @@ security:
                 login_path: /login
                 check_path: /login_check
                 default_target_path: /lista
+            provider: JF_provider

@@ -8,11 +8,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\JobOfferForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class JobOfferController extends Controller
 {
 
     /**
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/DodajOferte", name="nowaOferta")
      */
     public function addAction(Request $request)

@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -27,6 +28,7 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=25, unique=true)
+     * @ Assert\NotBlank()
      */
     private $username;
 
@@ -54,6 +56,7 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
+        $this->setRoles(array('ROLE_USER'));
     }
 
     /**

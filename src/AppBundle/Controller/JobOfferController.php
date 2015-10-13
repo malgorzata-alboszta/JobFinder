@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\JobOfferForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use AppBundle\Entity\Category;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class JobOfferController extends Controller
 {
@@ -43,10 +45,10 @@ class JobOfferController extends Controller
     }
 
     /**
-     * @Route("/lista", name="lista")
-     *
+     * @Route("/lista/{id}", name="lista", defaults={"id" = false}, requirements={"id":"\d+"})
+     * @ParamConverter("category", class="AppBundle:Category", options={"id" = "id"})
      */
-    public function listAction()
+    public function listAction(Category $category=null)
     {
         $repository = $this->getDoctrine()
                 ->getRepository('AppBundle:JobOffer');
@@ -54,15 +56,26 @@ class JobOfferController extends Controller
         $query = $repository->createQueryBuilder('JobOffer')
                 ->where('JobOffer.expiredAt> :now')
                 ->setParameter('now', new \DateTime())
-                ->orderBy('JobOffer.createdAt', 'ASC')
-                ->getQuery();
-
-        $jobsList = $query->getResult();
+                ->orderBy('JobOffer.createdAt', 'ASC');         
+        
+        if ($category) {
+            $query
+                ->andWhere ('JobOffer.category = :category')
+                ->setParameter ('category', $category);
+        }
+        
+        $Query = $query->getQuery(); //ctr+R zmiana nazw
+        $jobsList = $Query->getResult();
+        
+        $categoriesRepository = $this->getDoctrine()
+                ->getRepository('AppBundle:Category');
+        
+        $categories = $categoriesRepository ->findAll();
 
         return $this->render('AppBundle:JobOffer:list.html.twig', array(
-                    'lista_ofert' => $jobsList, //widok formularza przekazujemy do twiga
-        ));
-//    return array('lista_ofert'=> $jobsList); kiedy mamy @Template()
+                    'lista_ofert' => $jobsList, 
+                    'category_list'=>$categories,
+        ));//      return array('lista_ofert'=> $jobsList); kiedy mamy @Template()
     }
 
     /**

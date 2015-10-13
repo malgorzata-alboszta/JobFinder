@@ -48,13 +48,17 @@ class JobOfferController extends Controller
      * @Route("/lista/{id}", name="lista", defaults={"id" = false}, requirements={"id":"\d+"})
      * @ParamConverter("category", class="AppBundle:Category", options={"id" = "id"})
      */
-    public function listAction(Category $category=null)
+    public function listAction(Request $request, Category $category=null)
     {
         $repository = $this->getDoctrine()
                 ->getRepository('AppBundle:JobOffer');
         
         $JobQuery = $repository->getJobOfferQuery($category);
-        $QueryResult = $JobQuery->getQuery()->getResult();
+        
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $JobQuery, $request->query->get('page',1),$this->getParameter('max_on_page')
+                );
         
         $categoriesRepository = $this->getDoctrine()
                 ->getRepository('AppBundle:Category');
@@ -62,7 +66,7 @@ class JobOfferController extends Controller
         $categories = $categoriesRepository ->findAll();
 
         return $this->render('AppBundle:JobOffer:list.html.twig', array(
-                    'lista_ofert' => $QueryResult, 
+                    'lista_ofert' => $pagination, 
                     'category_list'=>$categories,
         ));//      return array('lista_ofert'=> $jobsList); kiedy mamy @Template()
     }

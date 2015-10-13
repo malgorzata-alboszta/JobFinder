@@ -52,20 +52,9 @@ class JobOfferController extends Controller
     {
         $repository = $this->getDoctrine()
                 ->getRepository('AppBundle:JobOffer');
-
-        $query = $repository->createQueryBuilder('JobOffer')
-                ->where('JobOffer.expiredAt> :now')
-                ->setParameter('now', new \DateTime())
-                ->orderBy('JobOffer.createdAt', 'ASC');         
         
-        if ($category) {
-            $query
-                ->andWhere ('JobOffer.category = :category')
-                ->setParameter ('category', $category);
-        }
-        
-        $Query = $query->getQuery(); //ctr+R zmiana nazw
-        $jobsList = $Query->getResult();
+        $JobQuery = $repository->getJobOfferQuery($category);
+        $QueryResult = $JobQuery->getQuery()->getResult();
         
         $categoriesRepository = $this->getDoctrine()
                 ->getRepository('AppBundle:Category');
@@ -73,7 +62,7 @@ class JobOfferController extends Controller
         $categories = $categoriesRepository ->findAll();
 
         return $this->render('AppBundle:JobOffer:list.html.twig', array(
-                    'lista_ofert' => $jobsList, 
+                    'lista_ofert' => $QueryResult, 
                     'category_list'=>$categories,
         ));//      return array('lista_ofert'=> $jobsList); kiedy mamy @Template()
     }
